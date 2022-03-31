@@ -4,7 +4,7 @@ app.component("product", {
 </div>
 <div class="product-description">
    <h1>{{ title }}</h1>
-   
+   <img v-show ="showBestSellerImg()" class="img-best-seller" src="assets/images/best-seller.png">
    <p v-show = "notAvailable">Momentanement indisponible</p> <!-- gere uniquement le display css, est conseillé si on bascule des choses très souvent-->
 
     <p v-if = "sale"><!--rendu conditionnel-->
@@ -42,13 +42,19 @@ app.component("product", {
    </div>
    `,
 
+   props: {
+       bestseller: { // attribut personnaliser
+           type:Boolean // type bolean
+       }
+   },
+
     data(){
         return {product:"Pizza",
         type:"Orientale",
         price: 12,
         image:"assets/images/pizza1-tomate.jpg",
         sale:true,
-        notAvailable: true,
+        notAvailable: false,
         ingredients: [
             "Olives",
             "Poulet roti",
@@ -88,16 +94,23 @@ app.component("product", {
         //methods
         methods: {
             addProduct() {
+	
                 if(this.sale) {
-                    this.nbrProduct += 1;
-                    this.totalPrice = (this.price -5) * this.nbrProduct;
+                    this.$emit("add-product", this.price -5)
                 } else {
-                    this.nbrProduct += 1;
-                    this.totalPrice = this.price * this.nbrProduct;
+                    this.$emit("add-product", this.price)
                 }
-            },
+                
+                },
             updateImage(newLinkImage) { // argument newLinkImage
                 this.image = newLinkImage ;
+            },
+            showBestSellerImg(){    // affiche ou non l'image si bestseller = true
+                if(this.bestseller) {
+                    return true;
+                } else {
+                  false;  
+                }
             },
         }, 
         //computed 
