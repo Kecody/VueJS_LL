@@ -49,47 +49,9 @@
         </table>
     </div>  
      <div class="product-section">
-         <div class="product-image">
-             <img :src="image" alt="photo de pizza"> <!--liaison d'attribut -->
-        </div>
-        <div class="product-description">
-            <h1>{{ title }}</h1>
-            
-            <p v-show = "notAvailable">Momentanement indisponible</p> <!-- gere uniquement le display css, est conseillé si on bascule des choses très souvent-->
-
-             <p v-if = "sale"><!--rendu conditionnel-->
-                <span class="sale">{{price}}</span>
-                <span class ="price">{{price - 5}}</span>
-            </p >
-            <p v-else>
-                <span class ="new-price">{{price}}</span>
-            </p>
-
-            <br>
-
-            <strong>Ingrédients</strong>
-                <div>
-                    <!--donne un indice pour que vue suive l'identité de chaque noeud créer grâce à l'attribut key et ainsi reutiliser reogarniser les éléments existants.-->
-                    <span v-for ="(ingredient, index) in ingredients" :key="index">{{ingredient + ", "}}</span><!-- il est conseille d'attribuer des key a des boucles for dans la mesure du possible sauf si le contenu itéré soit simple ou se fier au comportement par default pour des gains de performances-->
-                </div>
-                <br>
-            <div class="sauce">
-                <strong>Sauce au choix</strong>
-                <ul>
-                    <li v-for = "sauce in sauces" :key="sauce.id" @mouseover="updateImage(sauce.image)" :style="{backgroundColor : sauce.color}">{{sauce.type}}</li>
-                    <!--liaison de style--> <!--expression-->
-                </ul>
-            </div>
-            <div>
-                <strong>Valeurs nutritionnelles pour 100 grammes</strong>
-                <ul><!--L'attribut key donne a chaque éléments une clef unique afin que vue puisse saisir l'élément et ne pas le perdre au fur et a mesure que les choses se mettent à jour dans l'application -->
-                    <li v-for = "( value, name, index) in energy" :key="index">{{name}} : {{ value }}</li> <!--récupère la valeur et le nom dans le tableau energy-->
-                </ul>
-            </div>
-
-                <button :class="{noActiveBtn : notAvailable}" @click = "addProduct()" :disabled="notAvailable" >Ajouter à ma commande</button><!-- On veut écouter l'évenement click , raccourcis v-on:click -> (@click)-->
-                <!--liaison d'attribut de classe--><!--condition pour que la classe noActiveBtn soit active sera la propriete notAvailable--><!--directive d'attribut-->
-            </div>
+            <product></product>
+            <product></product>
+            <product></product>
         </div>
      </div>
  </div>  
@@ -97,6 +59,7 @@
  <!-- JS -->
  <script src="https://unpkg.com/vue@next"></script> 
  <script src="main.js"></script>
+ <script src="component/Product.js"></script>
  <script>
      const mountApp = app.mount("#app");
  </script>
